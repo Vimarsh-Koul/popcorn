@@ -1,5 +1,6 @@
 import 'Pages/login.dart';
 import 'package:flutter/material.dart';
+import 'Pages/home.dart';
 
 void main() {
   runApp(Popcorn());
@@ -11,6 +12,7 @@ class Popcorn extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => Login_Page(),
+        '/home': (context) => Home(),
       },
     );
   }

@@ -126,7 +126,9 @@ class _Login_PageState extends State<Login_Page> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(28.0),
                               side: BorderSide(color: Hexcolor("#f8de8d"))),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/home');
+                          },
                           textColor: Colors.white,
                           child: Text(
                             'Login',
