@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:popcorn/Models/trending.dart';
+import 'package:popcorn/Services/api_manager.dart';
 import 'package:popcorn/Widgets/appbar.dart';
 
 // Icon cus = Icon(
@@ -29,7 +31,13 @@ class Home extends StatefulWidget {
 //     ));
 
 class _HomeState extends State<Home> {
+  Future<Result> _trending_result;
   @override
+  void initState() {
+    _trending_result = API_manager().get_trending();
+    super.initState();
+  }
+
   Icon cus = Icon(
     Icons.search,
     size: 30.0,
@@ -101,6 +109,18 @@ class _HomeState extends State<Home> {
             icon: cus,
           ),
         ],
+      ),
+      body: FutureBuilder(
+        future: _trending_result,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(itemBuilder: (context, index) {
+              return Text('Working');
+            });
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
