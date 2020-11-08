@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final welcome = welcomeFromJson(jsonString);
+//     final trending = trendingFromJson(jsonString);
 
 import 'dart:convert';
 
-Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
+Trending trendingFromJson(String str) => Trending.fromJson(json.decode(str));
 
-String welcomeToJson(Welcome data) => json.encode(data.toJson());
+String trendingToJson(Trending data) => json.encode(data.toJson());
 
-class Welcome {
-  Welcome({
+class Trending {
+  Trending({
     this.page,
     this.results,
     this.totalPages,
@@ -21,7 +21,7 @@ class Welcome {
   int totalPages;
   int totalResults;
 
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+  factory Trending.fromJson(Map<String, dynamic> json) => Trending(
         page: json["page"],
         results:
             List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
@@ -78,7 +78,7 @@ class Result {
   String originalName;
   String name;
   DateTime firstAirDate;
-  List<OriginCountry> originCountry;
+  List<String> originCountry;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["id"],
@@ -107,8 +107,7 @@ class Result {
             : DateTime.parse(json["first_air_date"]),
         originCountry: json["origin_country"] == null
             ? null
-            : List<OriginCountry>.from(
-                json["origin_country"].map((x) => originCountryValues.map[x])),
+            : List<String>.from(json["origin_country"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -136,8 +135,7 @@ class Result {
             : "${firstAirDate.year.toString().padLeft(4, '0')}-${firstAirDate.month.toString().padLeft(2, '0')}-${firstAirDate.day.toString().padLeft(2, '0')}",
         "origin_country": originCountry == null
             ? null
-            : List<dynamic>.from(
-                originCountry.map((x) => originCountryValues.reverse[x])),
+            : List<dynamic>.from(originCountry.map((x) => x)),
       };
 }
 
@@ -146,18 +144,10 @@ enum MediaType { MOVIE, TV }
 final mediaTypeValues =
     EnumValues({"movie": MediaType.MOVIE, "tv": MediaType.TV});
 
-enum OriginCountry { US, ES, KR }
+enum OriginalLanguage { EN, ES }
 
-final originCountryValues = EnumValues(
-    {"ES": OriginCountry.ES, "KR": OriginCountry.KR, "US": OriginCountry.US});
-
-enum OriginalLanguage { EN, ES, KO }
-
-final originalLanguageValues = EnumValues({
-  "en": OriginalLanguage.EN,
-  "es": OriginalLanguage.ES,
-  "ko": OriginalLanguage.KO
-});
+final originalLanguageValues =
+    EnumValues({"en": OriginalLanguage.EN, "es": OriginalLanguage.ES});
 
 class EnumValues<T> {
   Map<String, T> map;
